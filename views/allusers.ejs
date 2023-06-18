@@ -1,0 +1,26 @@
+<% include ./partials/header.ejs %>
+   
+    <h1>all users</h1>
+    <hr>
+    <div class="container d-flex" >
+        <% allusers.forEach(function(user){ %>
+            <div class="card" style="width: 18rem;margin-right: 25px;">
+              <img src="/images/uploads/<%= user.image %> " class="card-img-top" alt="...">
+              <div class="card-body">
+                  <h5 class="card-title"><%= user.name %></h5>
+                  <h5 class="card-title"><%= user.username %></h5>
+                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                  <a href="/like/<%= user.id %>" class="btn btn-primary">like <%= user.like.length %></a>
+                     
+                  <% if(loggedInUser=== user.username){ %>
+                    <a href="/logout" class="btn btn-primary">logout</a>
+                    <a href="/profile" class="btn btn-success mt-2">my account</a>
+                <%  } %>
+                </div>
+              </div>
+       <% }) %>
+      
+    </div>
+     
+    <% include ./partials/footer.ejs %>
+
