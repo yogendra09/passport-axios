@@ -1,11 +1,11 @@
 <% include ./partials/header.ejs %>
    
-    <h1>all users</h1>
+    <h1>All users</h1>
     <hr>
     <div class="container d-flex" >
         <% allusers.forEach(function(user){ %>
             <div class="card" style="width: 18rem;margin-right: 25px;">
-              <img src="/images/uploads/<%= user.image %> " class="card-img-top" alt="...">
+              <img style="height: 25vh;object-fit: contain;" src="/images/uploads/<%= user.image %> " class="card-img-top" alt="...">
               <div class="card-body">
                   <h5 class="card-title"><%= user.name %></h5>
                   <h5 class="card-title"><%= user.username %></h5>

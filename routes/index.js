@@ -60,15 +60,15 @@ router.post('/register', function(req, res, next) {
 
 router.post("/uploads",isLoggedIn,upload.single('imagefile'),function(req,res,next){
     userModel.findOne({username:req.session.passport.user}).then(function(loggedInUser){
-      fs.unlink(`./public/images/uploads/${loggedInUser.image}`,function(err){
-        if(err){
-          console.log(err);
-        }else{
+      // fs.unlink(`./public/images/uploads/${loggedInUser.image}`,function(err){
+      //   if(err){
+      //     console.log(err);
+      //   }else{
           loggedInUser.image = req.file.filename ;
           loggedInUser.save().then(function(){
             res.redirect("back");
-          })
-        }
+      //     })
+      //   }
       })
       
     })
@@ -89,6 +89,20 @@ router.get("/logout",function(req,res,next){
         res.render("profile",{user:loggedInUser});
 
       })
+  })
+
+
+  router.get("/found/:username",function(req,res,next){
+
+     userModel.findOne({username:req.params.username}).then(function(foundUser){
+      if(foundUser){
+        res.json({found:true});
+      }
+      else{
+        res.json({found:false});
+      }
+     })
+
   })
 
   router.get("/like/:id",isLoggedIn,function(req,res,next){

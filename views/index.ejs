@@ -5,9 +5,10 @@
       <form action="/register" method="post">
         <h1>Register</h1>
         <hr>
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Username</label>
-          <input type="text" class="form-control" name="username"  aria-describedby="emailHelp">
+        <div class="mb-3 d-flex" style="flex-direction: column;">
+          <label for="exampleInputEmail1" class="form-label">Username :</label>
+          <input type="text" id="inpt" name="username"  >
+          <p id="txt" style="color: red;display: none;" class="form-text">Username existed please try another username.</>
         </div>
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Name</label>
@@ -19,7 +20,7 @@
           <input type="password" name="password" class="form-control" id="exampleInputPassword1">
         </div>
        
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button id="btn" type="submit" class="btn btn-primary">Submit</button>
         <a href="/login" class="btn btn-primary">login</a>
       </form>
     </div>
@@ -29,7 +30,40 @@
 
     <script>
 
-    
+      var inpt = document.querySelector("#inpt");
+      var btn = document.querySelector("#btn");
+      var txt = document.querySelector("#txt");
+
+
+      inpt.addEventListener("input",function(){
+
+
+
+        //  var val = inpt.value
+        if(inpt.value.trim().length > 0){
+         console.log(inpt.value);
+          axios.get(`/found/${inpt.value}`).then(function(data){
+          if(data.data.found){
+             inpt.style.outlineColor = "red";
+             txt.style.display = "contents";
+             btn.disabled = true;
+          }
+          else{
+            inpt.style.outlineColor = "green";
+            txt.style.display = "none";
+            btn.disabled = false;
+
+          }
+        })
+
+        }
+        else{
+          inpt.style.outlineColor = "black";
+        }
+
+
+      })
+       
 
     </script>
      

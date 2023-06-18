@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema({
   name:String,
   image:{
     type:String,
-    default:'./user.webp'
+    default:'./user.png'
   },
   like:{
     type:Array,
