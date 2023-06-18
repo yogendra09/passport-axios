@@ -39,9 +39,9 @@
 
 
 
-        //  var val = inpt.value
-        if(inpt.value.trim().length > 0){
-         console.log(inpt.value);
+
+        if(inpt.value.trim().length>0){
+
           axios.get(`/found/${inpt.value}`).then(function(data){
           if(data.data.found){
              inpt.style.outlineColor = "red";
@@ -57,9 +57,16 @@
         })
 
         }
+
         else{
           inpt.style.outlineColor = "black";
+
         }
+     
+         
+
+        
+       
 
 
       })
