@@ -7,6 +7,7 @@ const users = require('./users');
 var multer = require('multer');
 const path = require('path')
 const fs = require('fs');
+const { log } = require('console');
 passport.use(new localStrategy(userModel.authenticate()));
 
 const storage = multer.diskStorage({
@@ -60,16 +61,27 @@ router.post('/register', function(req, res, next) {
 
 router.post("/uploads",isLoggedIn,upload.single('imagefile'),function(req,res,next){
     userModel.findOne({username:req.session.passport.user}).then(function(loggedInUser){
-      // fs.unlink(`./public/images/uploads/${loggedInUser.image}`,function(err){
-      //   if(err){
-      //     console.log(err);
-      //   }else{
-          loggedInUser.image = req.file.filename ;
-          loggedInUser.save().then(function(){
-            res.redirect("back");
-      //     })
-      //   }
-      })
+      if(loggedInUser.image !== './user.png'){
+        fs.unlink(`./public/images/uploads/${loggedInUser.image}`,function(err){
+          if(err){
+            console.log(err);
+          }else{
+          console.log("hi");
+            loggedInUser.image = req.file.filename ;
+            loggedInUser.save().then(function(){
+              res.redirect("back");
+            })
+          }
+        })
+      }
+
+      else{
+         loggedInUser.image = req.file.filename ;
+            loggedInUser.save().then(function(){
+              res.redirect("back");
+            })
+      }
+     
       
     })
 
