@@ -117,6 +117,20 @@ router.get("/logout",function(req,res,next){
 
   })
 
+  router.get("/search/:username",function(req,res,next){
+
+    //find ke baad tu skip() aur limit(number) laga sakta hai
+ 
+    var regexp = new RegExp("^"+ req.params.username);
+         userModel.find({ username: regexp}).then(function(searchedUser){
+
+          res.json(searchedUser);
+
+         })
+    
+
+ })
+
   router.get("/like/:id",isLoggedIn,function(req,res,next){
    
     userModel.findOne({_id:req.params.id}).then(function(post){
