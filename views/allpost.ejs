@@ -1,0 +1,29 @@
+
+
+<% include ./partials/header %>
+
+ <h1>all post <a href="/allusers" class="btn btn-warning">all users</a> </h1>
+
+    <% allpost.forEach(function(post){ %>
+        <div class="card" style="width: 18rem;flex-shrink:0;">
+            <img style="height: 35vh;object-fit: contain;" src="/images/uploads/user.png" class="card-img-top" alt="...">
+            <div class="card-body">
+             
+              <p class="card-text"><%= post.post %></p>
+              <a href="" class="btn btn-primary">like <%= post.like.length %></a>
+            
+              
+            </div>
+          </div>
+   <% }) %>
+
+
+
+
+
+
+
+
+
+
+<% include ./partials/footer.ejs %>

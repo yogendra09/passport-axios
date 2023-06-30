@@ -18,11 +18,19 @@
           <a href="/like/<%= user.id %>" class="btn btn-primary">like <%= user.like.length %></a>
           <a href="/logout" class="btn btn-primary">logout</a>
           <a href="/allusers" class="btn btn-warning">all users</a>
+          <a href="/allpost" class="btn btn-warning">all post</a>
           
         </div>
       </div>
+
+      <form action="/post" method="post" style="position: relative;">
+        <h1>create post</h1>
+        <textarea name="post" id="" cols="30" rows="10" style="resize: none;height: 15vh;"></textarea>
+        <button type="submit" class="btn btn-primary" style="position: absolute;left: 0%;top: 34%;">submit</button>
+      </form>
     </div>
-     
+    
+   
    
     <script>
       document.querySelector("img").addEventListener("click",function(){

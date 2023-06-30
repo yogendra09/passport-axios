@@ -16,6 +16,11 @@ const userSchema = mongoose.Schema({
     type:Array,
     default:[]
   },
+  post:[{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'post'
+  }]
+  ,
   password:String
 })
 

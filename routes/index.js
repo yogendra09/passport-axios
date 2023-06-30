@@ -8,6 +8,8 @@ var multer = require('multer');
 const path = require('path')
 const fs = require('fs');
 const { log } = require('console');
+const postModel = require('./post');
+const post = require('./post');
 passport.use(new localStrategy(userModel.authenticate()));
 
 const storage = multer.diskStorage({
@@ -103,6 +105,25 @@ router.get("/logout",function(req,res,next){
       })
   })
 
+  router.post("/post",isLoggedIn,async function(req,res,next){
+     let loggedInUser = await userModel.findOne({username:req.session.passport.user});
+   let postCreated =   await postModel.create({
+      post:req.body.post,
+      userId:loggedInUser  
+    });
+    loggedInUser.post.push(postCreated);
+      await loggedInUser.save();
+      res.redirect('back');
+
+          
+   
+  })
+
+  router.get("/allpost",isLoggedIn,async function(req,res,next){
+     var allpost = await postModel.find();
+          res.render("allpost",{allpost,loggedInUser:req.session.passport.user})
+   
+})
 
   router.get("/found/:username",function(req,res,next){
 
