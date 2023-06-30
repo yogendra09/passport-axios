@@ -120,8 +120,9 @@ router.get("/logout",function(req,res,next){
   })
 
   router.get("/allpost",isLoggedIn,async function(req,res,next){
-     var allpost = await postModel.find();
-          res.render("allpost",{allpost,loggedInUser:req.session.passport.user})
+    let loggedInUser = await userModel.findOne({username:req.session.passport.user});
+     var allpost = await postModel.find().populate('userId');
+          res.render("allpost",{allpost,loggedInUser})
    
 })
 
@@ -167,6 +168,25 @@ router.get("/logout",function(req,res,next){
     })
    
 })
+
+
+  router.get('/post/like/:id',isLoggedIn,async function(req,res,next){
+      let loggedInUser = await userModel.findOne({username:req.session.passport.user});
+      let post = await postModel.findOne({_id:req.params.id})
+
+      if(post.like.indexOf(loggedInUser._id)===-1){
+
+        post.like.push(loggedInUser._id);
+      }else{
+        post.like.splice(post.like.indexOf(loggedInUser._id),1);
+      }
+    
+       await post.save();
+
+       res.redirect('back');
+
+  })
+  
 
   router.get("/allusers",isLoggedIn,function(req,res,next){
     userModel.find().then(function(allusers){

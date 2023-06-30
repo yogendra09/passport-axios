@@ -5,12 +5,14 @@
  <h1>all post <a href="/allusers" class="btn btn-warning">all users</a> </h1>
 
     <% allpost.forEach(function(post){ %>
-        <div class="card" style="width: 18rem;flex-shrink:0;">
-            <img style="height: 35vh;object-fit: contain;" src="/images/uploads/user.png" class="card-img-top" alt="...">
+        <div class="card mt-4" style="width: 18rem;flex-shrink:0;width: fit-content;padding: 0 10px;">
+            <div class="d-flex gap-4" style="align-items: center;">
+                <img style="height: 10vh;object-fit: contain;width: 5vh;" src="/images/uploads/<%= post.userId.image %>" class="card-img-top" alt="...">
+                 <h3><%= post.userId.username %></h3>
+            </div>
             <div class="card-body">
-             
               <p class="card-text"><%= post.post %></p>
-              <a href="" class="btn btn-primary">like <%= post.like.length %></a>
+              <a href="/post/like/<%= post._id %>" class="btn btn-primary">like <%= post.like.length %></a>
             
               
             </div>
@@ -22,7 +24,16 @@
 
 
 
+   <script>
+    document.addEventListener("DOMContentLoaded", function(event) { 
+        var scrollpos = localStorage.getItem('scrollpos');
+        if (scrollpos) window.scrollTo(0, scrollpos);
+    });
 
+    window.onbeforeunload = function(e) {
+        localStorage.setItem('scrollpos', window.scrollY);
+    };
+</script>
 
 
 
